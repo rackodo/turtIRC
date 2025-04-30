@@ -74,126 +74,40 @@ AsciiTable = {
 	# 126: "" # ~
 }
 
-timeBuffer = 1
-isvisible = True
+def ScribeString(t: turtle.Turtle, ref: list, string : str, pos : tuple[float, float]):
+	for index, letter in enumerate(string):
+		print(ref[pos[0] + index][pos[1]])
+		ScribeChar(t, letter, ref[pos[0] + index][pos[1]])
 
-class Scribe:
-	def __init__(self, turtle, screen):
-		self.turtle = turtle
-		self.screen = screen
-		
-		self.droneCount = 0
-		self.drones = {}
+def ScribeChar(t : turtle.Turtle, char : str, pos : tuple[float, float]):
+	if len(char) > 1: 
+		raise ValueError("Provided string is more than one character")
+		return
 
-		self.turtle.penup()
-
-	def AddText(self, text):
-		# split = textwrap.wrap(text, 39)
-		split = [text]
-
-		for span in split:
-			drone = LineDrone(span, self.turtle.pos(), self.screen, self, self.droneCount)
-			self.drones[self.droneCount] = drone
-			self.droneCount += 1
-			self.turtle.right(90)
-			self.turtle.forward(25)
-			self.turtle.left(90)
-
-	def KillDrone(self, index):
-		del self.drones[index]
-
-class LineDrone:
-	def __init__(self, string, pos, screen, host, dIndex):
-		self.turtle = turtle.Turtle(visible=isvisible)
-		self.turtle.penup()
-		self.turtle.goto(pos)
-		self.turtle.pendown()
-		self.string = string
-		self.screen = screen
-		self.host = host
-		self.index = 0
-
-		self.dIndex = dIndex
-		self.droneCount = 0
-		self.drones = {}
-
-		self.AssignLetterDrones()
-
-	def AssignLetterDrones(self):
-		if (self.index < len (self.string)):
-			char = self.string.upper()[self.index]
-
-			unparsedCommands = AsciiTable.get(ord(char), 35).split(" ")
-			self.DeployDrone(unparsedCommands)
-
-			self.turtle.penup()
-			self.turtle.forward(15)
-			self.turtle.pendown()
-
-			self.index += 1
-			self.screen.update()
-
-			self.screen.ontimer(self.AssignLetterDrones, timeBuffer)
-		else:
-			print("Killing LineDrone " + str(self.dIndex))
-			self.host.KillDrone(self.dIndex)
-
-			self.turtle.penup()
-			self.turtle.goto(-1000, -1000)
-			self.screen.update()
-
-	def DeployDrone(self, command):
-		drone = LetterDrone(command, self.turtle.pos(), self.screen, self, self.droneCount)
-		self.drones[self.droneCount] = drone
-		self.droneCount += 1
-
-	def KillDrone(self, index):
-		del self.drones[index]
-
-class LetterDrone:
-	def __init__(self, instructions, pos, screen, host, dIndex):
-		self.turtle = turtle.Turtle(visible=isvisible)
-		self.turtle.penup()
-		self.turtle.setpos(pos)
-		self.turtle.pendown()
-		self.instructions = instructions
-		self.screen = screen
-		self.host = host
-		self.dIndex = dIndex
-
-		self.index = 0
-
-		self.DrawCharacter()
+	if ord(char.upper()) not in AsciiTable:
+		raise IndexError("Provided character isn't currently supported")
+		return
 	
-	def DrawCharacter(self):
-		if self.index < len (self.instructions):
-			unCommand = self.instructions[self.index]
-			commands = re.findall(r'([FLRUDB])(\d*)', unCommand)
-		
-			for command, value in commands:
-				if command in 'FLRB':  # Movement or Rotation commands
-					value = int(value) if value else 0  # Convert number part to integer, default 0 if missing
-					if command == 'F':  # Move forward
-						self.turtle.forward(value)
-					elif command == 'B':
-						self.turtle.backward(value)
-					elif command == 'L':  # Turn left
-						self.turtle.left(value)
-					elif command == 'R':  # Turn right
-						self.turtle.right(value)
-				elif command == 'U':  # Pen Up
-					self.turtle.penup()
-				elif command == 'D':  # Pen Down
-					self.turtle.pendown()
-				
-			self.index += 1
-			self.screen.update()
+	turtleString = AsciiTable[ord(char.upper())]
 
-			self.screen.ontimer(self.DrawCharacter, timeBuffer)
-		else:
-			print("Killing Letter Drone " + str(self.dIndex))
-			self.host.KillDrone(self.dIndex)
-			self.turtle.penup()
-			self.turtle.goto(-1000, -1000)
+	turtleCommands = re.findall(r'([FLRUDB])(\d*)', turtleString)
 
-			self.screen.update()
+	t.goto(pos)
+
+	t.pendown()
+	for command, value in turtleCommands:
+		if command in 'FLRB':  # Movement or Rotation commands
+			value = int(value) if value else 0  # Convert number part to integer, default 0 if missing
+			if command == 'F':  # Move forward
+				t.forward(value)
+			elif command == 'B':
+				t.backward(value)
+			elif command == 'L':  # Turn left
+				t.left(value)
+			elif command == 'R':  # Turn right
+				t.right(value)
+		elif command == 'U':  # Pen Up
+			t.penup()
+		elif command == 'D':  # Pen Down
+			t.pendown()
+	t.penup()
