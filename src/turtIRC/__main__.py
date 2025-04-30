@@ -8,7 +8,8 @@ padding = 2
 rows = 22
 columns = 82
 
-grid = [[(None, None) for row in range(0, rows)] for col in range(0, columns)]
+gridPosReference = [['' for _ in range(rows)] for _ in range(columns)]
+gridContents = [['' for _ in range(rows)] for _ in range(columns)]
 
 def main():
 	# Screen initialisation
@@ -25,7 +26,7 @@ def main():
 	# Prepares the grid! Sets screen positions for every possible character position and saves it to the grid dictionary for referral.
 	for r in range(0, rows):
 		for c in range(0, columns):
-			grid[c][r] = (t.pos()[0], t.pos()[1])
+			gridPosReference[c][r] = (t.pos()[0], t.pos()[1])
 			t.forward(10 + padding)
 		
 		t.goto((-(winWidth / 2) + padding + 1), t.pos()[1])
@@ -33,7 +34,8 @@ def main():
 		t.forward(20 + padding)
 		t.left(90)
 
-	ScribeString(t, grid, "according to all known laws of aviation there is", 0, 0)
+	ScribeString(t, gridPosReference, "abcdefghijklmnopqrstuvwxyz", 0, 0)
+	ScribeString(t, gridPosReference, "0123456789", 0, 1)
 
 	turtle.mainloop()
 
