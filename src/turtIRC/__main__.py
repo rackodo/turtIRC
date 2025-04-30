@@ -1,15 +1,3 @@
-""" 
-Right! Here's the plan:
-- IRC client (to be written) will write to a log file that will be then read to draw characters to the screen.
-"""
-
-"""
-TODO: 
-- get text wrapping
-- get text reading from a sample text file
-- TBD
-"""
-
 import turtle
 from turtIRC.Scribe import ScribeString
 
