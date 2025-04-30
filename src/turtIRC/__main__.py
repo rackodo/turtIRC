@@ -1,3 +1,15 @@
+""" 
+Right! Here's the plan:
+- IRC client (to be written) will write to a log file that will be then read to draw characters to the screen.
+"""
+
+"""
+TODO: 
+- get text wrapping
+- get text reading from a sample text file
+- TBD
+"""
+
 import turtle
 from turtIRC.Scribe import ScribeString
 
@@ -10,14 +22,8 @@ columns = 82
 
 grid = [[(None, None) for row in range(0, rows)] for col in range(0, columns)]
 
-scale = 1
-
-""" 
-Right! Here's the plan:
-- IRC client (to be written) will write to a log file that will be then read to draw characters to the screen.
-"""
-
 def main():
+	# Screen initialisation
 	screen = turtle.Screen()
 	screen.tracer(0)
 
@@ -28,17 +34,18 @@ def main():
 	t.penup()
 	t.goto(-(winWidth / 2) + padding + 1, (winHeight / 2) - padding - 1)
 
+	# Prepares the grid! Sets screen positions for every possible character position and saves it to the grid dictionary for referral.
 	for r in range(0, rows):
 		for c in range(0, columns):
 			grid[c][r] = (t.pos()[0], t.pos()[1])
-			t.forward((10 * scale) + padding)
+			t.forward(10 + padding)
 		
 		t.goto((-(winWidth / 2) + padding + 1), t.pos()[1])
 		t.right(90)
-		t.forward((20 * scale) + padding)
+		t.forward(20 + padding)
 		t.left(90)
 
-	ScribeString(t, grid, "according to all known laws of aviation there is", (1, 0))
+	ScribeString(t, grid, "according to all known laws of aviation there is", 0, 0)
 
 	turtle.mainloop()
 

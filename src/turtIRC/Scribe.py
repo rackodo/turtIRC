@@ -1,7 +1,7 @@
 import turtle
 import re
-import textwrap
 
+# Mappings from ASCII decimal values to encrypted turtle movement instructions.
 AsciiTable = {
 	32: "", # 
 	# 33: "", # !
@@ -74,12 +74,21 @@ AsciiTable = {
 	# 126: "" # ~
 }
 
-def ScribeString(t: turtle.Turtle, ref: list, string : str, pos : tuple[float, float]):
+def ScribeString(
+		t: turtle.Turtle, 
+		ref: list, 
+		string : str, 
+		x : int, 
+		y : int
+		):
 	for index, letter in enumerate(string):
-		print(ref[pos[0] + index][pos[1]])
-		ScribeChar(t, letter, ref[pos[0] + index][pos[1]])
+		ScribeChar(t, letter, ref[x + index][y])
 
-def ScribeChar(t : turtle.Turtle, char : str, pos : tuple[float, float]):
+def ScribeChar(
+		t : turtle.Turtle, 
+		char : str, 
+		pos : tuple[float, float]
+		):
 	if len(char) > 1: 
 		raise ValueError("Provided string is more than one character")
 		return
@@ -95,6 +104,7 @@ def ScribeChar(t : turtle.Turtle, char : str, pos : tuple[float, float]):
 	t.goto(pos)
 
 	t.pendown()
+	# Decrypts encrypted turtle instructions and executes upon them.
 	for command, value in turtleCommands:
 		if command in 'FLRB':  # Movement or Rotation commands
 			value = int(value) if value else 0  # Convert number part to integer, default 0 if missing
