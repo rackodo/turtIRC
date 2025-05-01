@@ -10,15 +10,15 @@ AsciiTable = {
 	# 36: "", # $
 	# 37: "", # %
 	# 38: "", # &
-	# 39: "", # '
+	39: "U F5 R90 D F3", # '
 	# 40: "", # (
 	# 41: "", # )
 	# 42: "", # *
 	43: "U F5 R90 D F20 B10 L90 F5 B10 F5", # +
-	# 44: "", # ,
-	# 45: "", # -
+	44: "U F5 R90 F17 D F3", # ,
+	45: "U R90 F10 L90 D F10", # -
 	# 46: "", # .
-	# 47: "", # /
+	47: "U F10 R90 R27 D F22", # /
 	48: "F10 R90 F20 R90 F10 R90 F20 B15 R45 F14", # 0
 	49: "F5 R90 F20 R90 F5 B10", # 1
 	50: "F10 R90 F10 R90 F10 L90 F10 L90 F10", # 2
@@ -29,12 +29,12 @@ AsciiTable = {
 	55: "F10 R90 F20", # 7
 	56: "F10 R90 F20 R90 F10 R90 F20 B10 R90 F10", # 8
 	57: "F10 R90 F20 R90 F10 R90 U F10 D R90 F10 B10 L90 F10", # 9
-	# 58: "", # :
+	58: "U F5 R90 F6 D F1 U F6 D F1 U ", # :
 	# 59: "", # ;
 	60: "U F10 R90 D R45 F14 L90 F14", # <
 	# 61: "", # =
 	62: "R45 F14 R90 F14", # >
-	# 63: "", # ?
+	63: "F10 R90 F10 R90 F5 L90 F4 U F3 D F3", # ?
 	64: "F10 R90 F20 R90 F10 R90 F18 R90 F8 R90 F16 R90 F6 R90 F8 R90 F6", # @
 	65: "F10 R90 F20 R90 U F10 R90 D F20 B10 R90 F10 B10 L90 F10 R90", # A
 	66: "F7 R90 F10 L90 F3 R90 F10 R90 F10 R90 F10 R90 F10 B10 L90 F10 R90", # B
@@ -62,9 +62,9 @@ AsciiTable = {
 	88: "R66 F22 B22 L66 U F10 D L66 B22 F22 R66 U B10", # X
 	89: "U F10 R90 D F10 R90 F10 B10 L90 F10 R90 F10 R90 U F10 D F10 R90", # Y
 	90: "F10 R90 R27 F22 L117 F10", # Z
-	# 91: "", # [
+	91: "F10 B10 R90 F20 L90 F10", # [
 	# 92: "", # \
-	# 93: "", # ]
+	93: "F10 R90 F20 R90 F10", # ]
 	# 94: "", # ^
 	# 95: "", # _
 	# 96: "", # `
@@ -94,8 +94,8 @@ def ScribeChar(
 		return
 
 	if ord(char.upper()) not in AsciiTable:
-		raise IndexError("Provided character isn't currently supported")
-		return
+		print(f"MISSING ASCII! Define {char} ({ord(char.upper())}). Replaced with blank for now.")
+		char = " "
 	
 	turtleString = AsciiTable[ord(char.upper())]
 
