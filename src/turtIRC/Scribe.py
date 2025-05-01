@@ -1,4 +1,7 @@
+from turtIRC.GlobalVars import *
+import turtIRC.GlobalVars as gvar
 import turtle
+import textwrap
 import re
 
 # Mappings from ASCII decimal values to encrypted turtle movement instructions.
@@ -76,13 +79,12 @@ AsciiTable = {
 
 def ScribeString(
 		t: turtle.Turtle, 
-		ref: list, 
-		string : str, 
 		x : int, 
-		y : int
+		y : int,
+		string : str
 		):
 	for index, letter in enumerate(string):
-		ScribeChar(t, letter, ref[x + index][y])
+		ScribeChar(t, letter, gridPosRef[x + index][y])
 
 def ScribeChar(
 		t : turtle.Turtle, 
@@ -122,3 +124,37 @@ def ScribeChar(
 		elif command == 'D':  # Pen Down
 			t.pendown()
 	t.penup()
+
+def ShiftGrid(t : turtle.Turtle):
+	gvar.rowPointer -= 1
+	del gridContents[0]
+	gridContents.append([' ' for _ in range(columns)])
+
+	RenderContents(t)
+
+def CommitString(
+		t : turtle.Turtle,
+		string : str,
+	):
+
+	wrappedString = textwrap.wrap(string, columns)
+
+	for line in wrappedString:
+		for charIdx, char in enumerate(line):
+			try:
+				gridContents[gvar.rowPointer][charIdx] = char
+			except IndexError:
+				ShiftGrid(t)
+				gridContents[gvar.rowPointer][charIdx] = char
+
+		gvar.rowPointer += 1
+
+def RenderContents(
+		t : turtle.Turtle
+	):
+
+	t.clear()
+
+	for x in range(rows):
+		for y in range(columns):
+			ScribeChar(t, gridContents[x][y], gridPosRef[x][y])

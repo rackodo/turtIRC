@@ -10,7 +10,7 @@ GOALS:
 - [unlikely] colour customisations (turning control codes into hex values)
 
 TODO: 
-- get text wrapping
-- get text reading from a sample text file
+- [DONE] get text wrapping
+- [DONE] get text reading from a sample text file
 - dev the client (steal from https://github.com/bl4de/irc-client)
 ```

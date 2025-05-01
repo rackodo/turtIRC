@@ -1,0 +1,21 @@
+[16:49:41] <+ztrawhcse> hmm
+[16:49:53] <+ztrawhcse> what kind of customizations would it be able to offer
+[16:51:39] <+immolo> So it's very early days, but we are looking for a stage3+grub+gentoo-kernel install at the moment
+[16:52:27] <+ztrawhcse> nothing more sophisticated?
+[16:52:31] <+immolo> so think desktop stage3 with binhost enable ready to boot
+[16:53:10] <+ztrawhcse> I suppose that that is mostly what the first half of a handbook install does...
+[16:53:17] <+immolo> Yeah
+[16:53:20] <+ztrawhcse> modulo kernel choice
+[16:53:36] <+immolo> S*m described best
+[16:53:46] <+ztrawhcse> which uh if you're the installer type you're not doing handmade `make install`
+[16:54:02] <+immolo> If you want a quick gentoo ready to g, this will cater for it
+[16:54:21] <+immolo> if you want something more custom, use the handbook
+[16:54:24] <+ztrawhcse> will it offer a choice between kde and gnome?
+[16:55:03] <+immolo> for now I would like them to just get console boot going
+[16:55:25] <+ztrawhcse> fair enough, pre-DE state makes sense
+[16:55:53] <+immolo> after that we can make calamari module that installs any DE the binhost supportds
+[16:55:57] <+ztrawhcse> you can always do the installer and then immediately install the primary desktop virtual
+[16:58:11] <+immolo> That's how I see it
+[16:59:18] <+immolo> doesn't need to make a system anymore fancy then the qcow2 images we provide
+[16:59:58] <+immolo> I normally boot one of those up aninstall a DE with the binhost if I need somewthing fast
+[17:01:26] <+immolo> ztrawhcse: did cow you the story about the Arch elections?
